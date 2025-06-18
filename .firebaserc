@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "chatterbox-c0319",
+    "dev": "chatterbox-c0319"
+  },
+  "targets": {},
+  "etags": {}
+}
