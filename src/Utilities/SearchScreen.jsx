@@ -2,9 +2,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Search, X, UserPlus } from 'lucide-react';
 import { db } from '../firebase';
-import { collection, getDocs, doc, setDoc, getDoc, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { useAuth } from '../hooks/useAuth';
 import { useUserProfile } from '../context/UserProfileContext';
+import { followUser } from './followUser';
 
 const SearchScreen = () => {
     const { setSelectedUserId } = useUserProfile();
@@ -41,36 +42,40 @@ const SearchScreen = () => {
         setPosts(matchedPosts);
     }, [searchTerm]);
 
-    const followUser = async (targetUserId) => {
-        if (!currentUser || currentUser.uid === targetUserId) return;
+    // const followUser = async (targetUserId) => {
+    //     if (!currentUser || currentUser.uid === targetUserId) return;
 
-        const followRef = doc(db, 'users', targetUserId, 'followers', currentUser.uid);
-        const alreadyFollowing = await getDoc(followRef);
+    //     const followRef = doc(db, 'users', targetUserId, 'followers', currentUser.uid);
+    //     const alreadyFollowing = await getDoc(followRef);
 
-        if (!alreadyFollowing.exists()) {
-            // ✅ Add to followers + following
-            await setDoc(followRef, { followedAt: Date.now() });
-            await setDoc(doc(db, 'users', currentUser.uid, 'following', targetUserId), {
-                followedAt: Date.now(),
-            });
+    //     if (!alreadyFollowing.exists()) {
+    //         // ✅ Add to followers + following
+    //         await setDoc(followRef, { followedAt: Date.now() });
+    //         await setDoc(doc(db, 'users', currentUser.uid, 'following', targetUserId), {
+    //             followedAt: Date.now(),
+    //         });
 
-            // ✅ Send a follow notification
-            const notifRef = collection(db, 'users', targetUserId, 'notifications');
-            await addDoc(notifRef, {
-                type: 'follow',
-                senderId: currentUser.uid,
-                senderName: currentUser.displayName || 'Someone',
-                senderPhoto: currentUser.photoURL || '',
-                timestamp: serverTimestamp(),
-                read: false
-            });
+    //         // ✅ Send a follow notification
+    //         const notifRef = collection(db, 'users', targetUserId, 'notifications');
+    //         await addDoc(notifRef, {
+    //             type: 'follow',
+    //             senderId: currentUser.uid,
+    //             senderName: currentUser.displayName || 'Someone',
+    //             senderPhoto: currentUser.photoURL || '',
+    //             timestamp: serverTimestamp(),
+    //             read: false
+    //         });
 
-            alert('Follow request sent!');
-        } else {
-            alert('You’re already following this user.');
-        }
+    //         alert('Follow request sent!');
+    //     } else {
+    //         alert('You’re already following this user.');
+    //     }
+    // };
+    const handleFollow = async (targetUserId) => {
+        console.log("clicked!");
+        
+        await followUser(targetUserId);
     };
-
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -110,12 +115,15 @@ const SearchScreen = () => {
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-3">
-                                    <button onClick={() => followUser(user.id)} className="text-sm text-green-600 hover:underline flex items-center">
+                                    {/* <button onClick={() => followUser(user.id)} className="text-sm text-green-600 hover:underline flex items-center">
+                                        <UserPlus size={16} className="mr-1" /> Follow
+                                    </button> */}
+                                    <button onClick={()=>handleFollow(user.id)} className="text-sm text-green-600 hover:underline flex items-center">
                                         <UserPlus size={16} className="mr-1" /> Follow
                                     </button>
                                     <button
                                         className="text-sm text-blue-600 hover:underline"
-                                        onClick={() => setSelectedUserId(user.id)}
+                                        onClick={() => setSelectedUserId(user.id, currentUser.id)}
                                     >
                                         View Profile
                                     </button>

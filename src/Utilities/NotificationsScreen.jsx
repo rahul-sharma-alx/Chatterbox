@@ -53,7 +53,6 @@ const NotificationsScreen = () => {
 
   return (
     <div className="p-4 md:p-6 h-full bg-gray-50 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Notifications</h2>
 
       {notifications.length === 0 ? (
         <p className="text-gray-500">No notifications yet.</p>

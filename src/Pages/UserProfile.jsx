@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import LoadingAni from '../components/LoadingAni';
+import { followUser } from '../Utilities/followUser';
 
 const UserProfile = ({ userId }) => {
     const [userData, setUserData] = useState(null);
@@ -38,10 +39,14 @@ const UserProfile = ({ userId }) => {
         fetchProfile();
     }, [userId]);
 
+    const handleFollow = async (targetUserId) => {
+        await followUser(targetUserId);
+    };
+
     if (!userId) return <div className="p-4">Invalid user.</div>;
 
     if (!userData) return <div className="p-4 text-center"><LoadingAni fullScreen />
-</div>;
+    </div>;
 
     return (
         <div className="p-4 md:p-6 bg-gray-50 min-h-screen transition-all duration-500 ease-in-out">
@@ -56,6 +61,12 @@ const UserProfile = ({ userId }) => {
                 <span><strong>{followersCount}</strong> Followers</span>
                 <span><strong>{followingCount}</strong> Following</span>
             </div>
+            <button
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                onClick={()=>handleFollow(userData.id)}
+            >
+                Follow
+            </button>
 
             <h3 className="text-lg font-semibold mb-4">Public Posts</h3>
             {publicPosts.length === 0 ? (

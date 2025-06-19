@@ -14,6 +14,7 @@ import Login from './Pages/Login';
 import UserProfile from './Pages/UserProfile';
 import { useUserProfile, UserProfileProvider } from './context/UserProfileContext';
 import LoadingAni from './components/LoadingAni';
+import { Toaster } from 'react-hot-toast';
 
 const TABS = {
   CHAT: 'CHAT',
@@ -67,7 +68,7 @@ const MainUI = () => {
           <header className='sticky top-0 z-[100] bg-white/30 backdrop-blur-md shadow-sm' >
             <Navbar props={activeTab}/>
           </header>
-
+          {<Toaster />}
           {/* Tab or Route Content */}
           <div className="flex-grow overflow-y-auto">
             {selectedUserId ? (
