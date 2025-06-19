@@ -115,10 +115,13 @@ const Profile = () => {
       const userDoc = await getDoc(userRef);
       return userDoc.exists() ? { uid: docSnap.id, ...userDoc.data() } : null;
     }));
-    console.log("log:", users.filter(Boolean));
-    
+
     setFollowerList(users.filter(Boolean));
     setActiveTab('followers');
+    setTimeout(() => {
+      document.getElementById('activeTab')?.scrollIntoView({ behavior: 'smooth' });
+    }, 0);
+
   };
 
   const fetchFollowingList = async () => {
@@ -130,6 +133,10 @@ const Profile = () => {
     }));
     setFollowingList(users.filter(Boolean));
     setActiveTab('following');
+
+    setTimeout(() => {
+      document.getElementById('activeTab')?.scrollIntoView({ behavior: 'smooth' });
+    }, 0);
   };
 
   const unfollowUser = async (targetUid) => {
@@ -141,7 +148,35 @@ const Profile = () => {
   const postCount = posts.length;
 
   if (!currentUser) return <div className="text-center mt-10">Please log in.</div>;
-  if (loading) return <div className="text-center mt-10"><LoadingAni text="Loading Profile" size={28} /></div>;
+  if (loading) {
+    return (
+      <div className="max-w-3xl mx-auto py-8 animate-pulse space-y-6">
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex items-center space-x-4">
+            <div className="w-16 h-16 rounded-full bg-gray-300" />
+            <div className="flex-1 space-y-2">
+              <div className="w-32 h-4 bg-gray-300 rounded" />
+              <div className="w-24 h-3 bg-gray-200 rounded" />
+              <div className="w-full h-8 bg-gray-100 rounded mt-2" />
+            </div>
+          </div>
+          <div className="flex space-x-8 mt-4">
+            <div className="w-16 h-3 bg-gray-200 rounded" />
+            <div className="w-20 h-3 bg-gray-200 rounded" />
+            <div className="w-20 h-3 bg-gray-200 rounded" />
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="w-40 h-4 bg-gray-300 rounded mb-4" />
+          <div className="space-y-2">
+            <div className="w-64 h-3 bg-gray-200 rounded" />
+            <div className="w-40 h-3 bg-gray-200 rounded" />
+            <div className="w-48 h-3 bg-gray-200 rounded" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto py-8">
@@ -185,7 +220,7 @@ const Profile = () => {
       </div>
 
       {activeTab && (
-        <div className="bg-white p-4 rounded shadow mb-4">
+        <div className="bg-white p-4 rounded shadow mb-4" id='activeTab'>
           <h3 className="font-semibold mb-2">{activeTab === 'followers' ? 'Followers' : 'Following'}</h3>
           <ul className="space-y-2">
             {(activeTab === 'followers' ? followerList : followingList).map(user => (
@@ -194,7 +229,7 @@ const Profile = () => {
                   <img src={user.photoURL} alt="avatar" className="w-8 h-8 rounded-full" />
                   <div>
                     <p className="text-sm font-medium">{user.displayName}</p>
-                    <p className="text-xs text-gray-500">@{user.uid}</p>
+                    <p className="text-xs text-gray-500">@{user.username}</p>
                   </div>
                 </div>
                 {activeTab === 'following' && (
@@ -221,7 +256,7 @@ const Profile = () => {
       )}
 
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold mb-2">Your Posts</h3>
+        <h3 className="text-lg font-semibold mb-4 ml-6">Your Posts</h3>
         {posts.length === 0 ? (
           <p className="text-gray-500">You haven't posted anything yet.</p>
         ) : (

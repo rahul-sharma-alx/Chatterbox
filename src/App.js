@@ -118,8 +118,14 @@ export default function App() {
 </div>;
 
   return user ? (
-    <UserProfileProvider>
-      <MainUI />
-    </UserProfileProvider>
-  ) : <Login />;
+    <div className="w-full max-w-2xl mx-auto">
+      <UserProfileProvider>
+        <MainUI />
+      </UserProfileProvider>
+    </div>
+  ) : (
+    <div className="w-full max-w-2xl mx-auto">
+      <Login />
+    </div>
+  );
 }

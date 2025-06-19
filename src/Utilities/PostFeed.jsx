@@ -11,6 +11,7 @@ const PostFeed = () => {
   const [loading, setLoading] = useState(false);
   const loaderRef = useRef(null);
   const [hasMore, setHasMore] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const getPosts = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -41,6 +42,7 @@ const PostFeed = () => {
       console.error("Error fetching posts:", err);
     } finally {
       setLoading(false);
+      setInitialLoading(false);
     }
   }, [lastDoc, loading, hasMore]); // ✅ dependency array
 
@@ -64,17 +66,36 @@ const PostFeed = () => {
     };
   }, [getPosts, loading, hasMore]);
 
+   // 🔥 Skeleton component
+  const SkeletonPost = () => (
+    <div className="bg-white p-4 rounded-lg shadow animate-pulse space-y-3">
+      <div className="flex items-center space-x-4">
+        <div className="w-10 h-10 bg-gray-200 rounded-full" />
+        <div className="flex-1 h-4 bg-gray-200 rounded w-1/2" />
+      </div>
+      <div className="h-4 bg-gray-200 rounded w-3/4" />
+      <div className="h-60 bg-gray-200 rounded" />
+    </div>
+  );
+
   return (
     <div className="space-y-6">
-      {posts.map(post => (
-        <PostItem key={post.id} post={post} />
-      ))}
+      {initialLoading ? (
+        Array(5).fill(0).map((_, i) => <SkeletonPost key={i} />)
+      ) : (
+        posts.map(post => (
+          <PostItem key={post.id} post={post} />
+        ))
+      )}
+
       <div ref={loaderRef} className="text-center py-6 text-gray-500">
-        {loading
-          ? <LoadingAni text="Loading Feed" size={25} />
-          : hasMore
-            ? 'Scroll to load more'
-            : 'No more posts'}
+        {loading && !initialLoading ? (
+          <LoadingAni text="Loading Feed" size={25} />
+        ) : hasMore ? (
+          'Scroll to load more'
+        ) : (
+          'No more posts'
+        )}
       </div>
     </div>
   );
