@@ -61,7 +61,7 @@ const MainUI = () => {
   const { selectedUserId, setSelectedUserId } = useUserProfile();
 
   return (
-    <div className="font-sans bg-gray-100 flex flex-col h-screen w-full">
+    <div className="bg-gray-100 flex flex-col h-screen w-full">
       <main className="flex-grow flex justify-center items-start w-full py-0 md:py-8">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl flex flex-col h-full md:h-[calc(100vh-4rem)]">
           {/* Header */}

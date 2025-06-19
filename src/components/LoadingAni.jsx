@@ -4,8 +4,8 @@ import { Loader2 } from 'lucide-react';
 
 const LoadingAni = ({ text = 'Loading...', size = 32, fullScreen = false }) => {
   const wrapperClasses = fullScreen
-    ? 'flex items-center justify-center min-h-screen bg-white dark:bg-black'
-    : 'flex items-center justify-center py-8';
+    ? 'flex items-center justify-center min-h-screen bg-white z-[100] dark:bg-black'
+    : 'flex items-center justify-center py-8 bg-white z-[100]';
 
   return (
     <div className={wrapperClasses}>
