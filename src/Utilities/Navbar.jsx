@@ -9,7 +9,7 @@ const Navbar = ({props}) => {
   }
 
   return (
-    <nav className="flex justify-between items-center p-4 bg-white shadow">
+    <nav className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md shadow">
       <h1 className="text-lg font-bold">{props !== 'HOME' ? Capitalize(props) : '🔥 Chatterbox'}</h1>
       <div className="relative">
         <Link to="/notifications" className="relative">

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
+import LoadingAni from '../components/LoadingAni';
 
 const UserProfile = ({ userId }) => {
     const [userData, setUserData] = useState(null);
@@ -39,7 +40,8 @@ const UserProfile = ({ userId }) => {
 
     if (!userId) return <div className="p-4">Invalid user.</div>;
 
-    if (!userData) return <div className="p-4 text-center">Loading...</div>;
+    if (!userData) return <div className="p-4 text-center"><LoadingAni fullScreen />
+</div>;
 
     return (
         <div className="p-4 md:p-6 bg-gray-50 min-h-screen transition-all duration-500 ease-in-out">

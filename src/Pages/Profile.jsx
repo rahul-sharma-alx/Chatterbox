@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore';
 import { Pencil, Trash2, Lock, LogOut, Globe, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
+import LoadingAni from '../components/LoadingAni';
 
 const Profile = () => {
   const { currentUser, logout, resetPassword } = useAuth();
@@ -95,7 +96,8 @@ const Profile = () => {
   const postCount = posts.length;
 
   if (!currentUser) return <div className="text-center mt-10">Please log in.</div>;
-  if (loading) return <div className="text-center mt-10">Loading profile...</div>;
+  if (loading) return <div className="text-center mt-10"><LoadingAni text="Loading Profile" size={28} />
+</div>;
 
   return (
     <div className="max-w-3xl mx-auto py-8">

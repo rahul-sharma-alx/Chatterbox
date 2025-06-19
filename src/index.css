@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* Hide all scrollbars globally, keep scrolling working */
+* {
+  scrollbar-width: none;         /* Firefox */
+  -ms-overflow-style: none;      /* IE & Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none;                 /* Chrome, Safari, Opera */
+}
+/* Enable smooth scrolling everywhere */
+html {
+  scroll-behavior: smooth;
+}

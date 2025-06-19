@@ -13,6 +13,7 @@ import Navbar from './Utilities/Navbar';
 import Login from './Pages/Login';
 import UserProfile from './Pages/UserProfile';
 import { useUserProfile, UserProfileProvider } from './context/UserProfileContext';
+import LoadingAni from './components/LoadingAni';
 
 const TABS = {
   CHAT: 'CHAT',
@@ -63,7 +64,7 @@ const MainUI = () => {
       <main className="flex-grow flex justify-center items-start w-full py-0 md:py-8">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl flex flex-col h-full md:h-[calc(100vh-4rem)]">
           {/* Header */}
-          <header >
+          <header className='sticky top-0 z-[100] bg-white/30 backdrop-blur-md shadow-sm' >
             <Navbar props={activeTab}/>
           </header>
 
@@ -80,7 +81,7 @@ const MainUI = () => {
           </div>
 
           {/* Bottom Navigation */}
-          <nav className="border-t border-gray-200 p-2 bg-white/80 backdrop-blur-sm">
+          <nav className="sticky bottom-0 z-[100] bg-white/30 backdrop-blur-md shadow-sm">
             <div className="flex justify-around items-center space-x-2">
               <TabButton tabName={TABS.HOME} icon={Home} />
               <TabButton tabName={TABS.CHAT} icon={MessageCircle} />
@@ -91,7 +92,7 @@ const MainUI = () => {
           </nav>
         </div>
       </main>
-      <p className="p-4 border-t border-gray-200 text-center w-full">
+      <p className="p-1 border-t border-gray-200 text-center w-full">
         Made with 💖 |<a href='https://alxpaced.netlify.app/'> Alxpace</a>
       </p>
     </div>
@@ -112,7 +113,8 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <div className="text-center mt-20">Loading...</div>;
+  if (loading) return <div className="text-center mt-20"><LoadingAni fullScreen />
+</div>;
 
   return user ? (
     <UserProfileProvider>
