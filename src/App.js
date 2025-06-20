@@ -93,9 +93,7 @@ const MainUI = () => {
           </nav>
         </div>
       </main>
-      <p className="p-1 border-t border-gray-200 text-center w-full">
-        Made with 💖 |<a href='https://alxpaced.netlify.app/'> Alxpace</a>
-      </p>
+      
     </div>
   );
 };
