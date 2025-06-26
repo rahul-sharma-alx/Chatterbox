@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://buymeacoffee.com/rahul.sharma.alx" target="_blank">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=rahul-sharma-alx&button_colour=ffdd00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
+    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=rahul.sharma.alx&button_colour=ffdd00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
   </a>
 </p>
 
@@ -123,7 +123,7 @@ If you like this project, consider supporting it:
 
 <p>
   <a href="https://www.buymeacoffee.com/rahul.sharma.alx" target="_blank">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=rahul-sharma-alx&button_colour=ffdd00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
+    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=rahul.sharma.alx&button_colour=ffdd00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
   </a>
 </p>
 
