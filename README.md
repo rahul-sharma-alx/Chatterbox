@@ -8,14 +8,14 @@
 </p>
 
 <p align="center">
-  <a href="https://your-live-preview-link.com" target="_blank">
-    <img src="public/screenshot.png" alt="Chatterbox App Preview" style="max-width: 100%; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.12); margin: 24px 0;"/>
+  <a href="https://chatterbox-c0319.web.app/" target="_blank">
+    <img src="screenshot.png" alt="Chatterbox App Preview" style="max-width: 100%; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.12); margin: 24px 0;"/>
   </a>
 </p>
 
 <p align="center">
-  <a href="https://www.buymeacoffee.com/yourusername" target="_blank">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=yourusername&button_colour=ffdd00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
+  <a href="https://www.buymeacoffee.com/rahul-sharma-alx" target="_blank">
+    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=rahul-sharma-alx&button_colour=ffdd00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
   </a>
 </p>
 
@@ -122,8 +122,8 @@ Open source under the [MIT License](LICENSE).
 If you like this project, consider supporting it:
 
 <p>
-  <a href="https://www.buymeacoffee.com/yourusername" target="_blank">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=yourusername&button_colour=ffdd00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
+  <a href="https://www.buymeacoffee.com/rahul-sharma-alx" target="_blank">
+    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=rahul-sharma-alx&button_colour=ffdd00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff"/>
   </a>
 </p>
 
