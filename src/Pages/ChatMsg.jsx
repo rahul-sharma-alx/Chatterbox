@@ -15,7 +15,7 @@ import {
 import { useAuth } from '../hooks/useAuth';
 import { uploadToCloudinary } from '../utils/uploadToCloudinary';
 import EmojiPicker from 'emoji-picker-react';
-import { updatePresence, subscribeToPresence } from '../utils/presence';
+import { updatePresence, subscribeToPresence, fetchPresenceOnce } from '../utils/presence';
 import ChatMessageBubble from '../components/ChatMessageBubble';
 import { v4 as uuidv4 } from 'uuid';
 

@@ -1,5 +1,5 @@
 // Enhanced Profile.jsx with Tabs, Follow Requests Modal, and Infinite Scroll
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { db } from '../firebase';
 import {
@@ -19,8 +19,7 @@ import {
 import toast from 'react-hot-toast';
 import ProfileSkeleton from '../components/ProfileSkeleton';
 import {
-  Pencil, Trash2, Lock, LogOut, Globe, EyeOff, X,
-  MoreVertical, Settings, Film, Image as ImageIcon, List
+  Pencil, Trash2, Lock, LogOut, Globe, EyeOff, Settings,
 } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 
@@ -53,43 +52,10 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [lastVisible, setLastVisible] = useState(null);
   const [loadingMore, setLoadingMore] = useState(false);
-
-  const observer = useRef();
   const bottomRef = useRef();
+  const [email, setEmail] = useState('');
 
-  useEffect(() => {
-    const targetUid = uid || currentUser?.uid;
-    if (!targetUid) return;
-
-    const fetchProfileData = async () => {
-      const profileRef = doc(db, 'users', targetUid);
-      const profileSnap = await getDoc(profileRef);
-      if (profileSnap.exists()) {
-        const profileData = profileSnap.data();
-        setUserData(profileData);
-        setBio(profileData.bio || '');
-        setProfileVisibility(profileData.visibility || 'public');
-      }
-    };
-
-    const fetchFollows = async () => {
-      const followersSnap = await getDocs(collection(db, 'users', targetUid, 'followers'));
-      const followingSnap = await getDocs(collection(db, 'users', targetUid, 'following'));
-      setFollowers(followersSnap.size);
-      setFollowing(followingSnap.size);
-
-      if (!isOwnProfile && currentUser) {
-        const followDoc = await getDoc(doc(db, 'users', targetUid, 'followers', currentUser.uid));
-        setIsFollowing(followDoc.exists());
-      }
-    };
-
-    fetchProfileData();
-    fetchFollows();
-    loadPosts(true);
-  }, [uid, currentUser, activeTab]);
-
-  const loadPosts = async (reset = false) => {
+  const loadPosts = useCallback(async (reset = false) => {
     const targetUid = uid || currentUser?.uid;
     if (!targetUid) return;
 
@@ -114,7 +80,40 @@ const Profile = () => {
     setLastVisible(snap.docs[snap.docs.length - 1]);
     setLoading(false);
     setLoadingMore(false);
-  };
+  }, [uid, currentUser?.uid, lastVisible]);
+
+  useEffect(() => {
+    const targetUid = uid || currentUser?.uid;
+    if (!targetUid) return;
+
+    const fetchProfileData = async () => {
+      const profileRef = doc(db, 'users', targetUid);
+      const profileSnap = await getDoc(profileRef);
+      if (profileSnap.exists()) {
+        const profileData = profileSnap.data();
+        setUserData(profileData);
+        setBio(profileData.bio || '');
+        setProfileVisibility(profileData.visibility || 'public');
+        setEmail(profileData.email || '');
+      }
+    };
+
+    const fetchFollows = async () => {
+      const followersSnap = await getDocs(collection(db, 'users', targetUid, 'followers'));
+      const followingSnap = await getDocs(collection(db, 'users', targetUid, 'following'));
+      setFollowers(followersSnap.size);
+      setFollowing(followingSnap.size);
+
+      if (!isOwnProfile && currentUser) {
+        const followDoc = await getDoc(doc(db, 'users', targetUid, 'followers', currentUser.uid));
+        setIsFollowing(followDoc.exists());
+      }
+    };
+
+    fetchProfileData();
+    fetchFollows();
+    loadPosts(true);
+  }, [uid, currentUser, activeTab, isOwnProfile, loadPosts]);
 
   useEffect(() => {
     if (loading) return;
@@ -129,7 +128,7 @@ const Profile = () => {
     );
     if (bottomRef.current) ob.observe(bottomRef.current);
     return () => ob.disconnect();
-  }, [lastVisible, loading]);
+  }, [lastVisible, loading, loadPosts]);
 
   const handleDelete = async (postId) => {
     if (!window.confirm('Are you sure you want to delete this post?')) return;
@@ -193,16 +192,17 @@ const Profile = () => {
             <img src={userData?.photoURL} alt="avatar" className="w-16 h-16 rounded-full" />
             <div>
               <h2 className="text-xl font-semibold">{userData?.displayName}</h2>
-              <p className="text-gray-500 text-sm">@{userData?.displayName?.toLowerCase().replace(/\s/g, '')}</p>
+              <p className="text-gray-500 text-sm">@{userData?.username?.toLowerCase().replace(/\s/g, '')}</p>
+              <p className="text-gray-500 text-xs bg-gray-100 p-1"><a href={`mailto:${email}`}>{email}</a></p>
               {isOwnProfile ? (
                 editingBio ? (
-                  <textarea
-                    className="mt-2 w-full text-sm border p-2 rounded"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    onBlur={updateBio}
-                    autoFocus
-                  />
+                    <textarea
+                      className="mt-2 w-full text-sm border p-2 rounded"
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                      onBlur={updateBio}
+                      autoFocus
+                    />
                 ) : (
                   <p
                     onClick={() => setEditingBio(true)}

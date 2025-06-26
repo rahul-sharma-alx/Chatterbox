@@ -66,7 +66,7 @@ const MainUI = () => {
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl flex flex-col h-full md:h-[calc(100vh-4rem)]">
           {/* Header */}
           <header className='sticky top-0 z-[100] bg-white/30 backdrop-blur-md shadow-sm' >
-            <Navbar props={activeTab}/>
+            <Navbar props={activeTab} />
           </header>
           {<Toaster />}
           {/* Tab or Route Content */}
@@ -93,7 +93,7 @@ const MainUI = () => {
           </nav>
         </div>
       </main>
-      
+
     </div>
   );
 };
@@ -113,7 +113,7 @@ export default function App() {
   }, []);
 
   if (loading) return <div className="text-center mt-20"><LoadingAni fullScreen />
-</div>;
+  </div>;
 
   return user ? (
     <div className="w-full max-w-2xl mx-auto">

@@ -19,6 +19,9 @@ const HomeScreen = () => {
             <div className="md:col-span-4">
                 <SharePost />
                 <PostFeed />
+                <p className="p-1 border-t border-gray-200 text-center w-full">
+                    Made with 💖 |<a href='https://alxpaced.netlify.app/'> Alxpace</a>
+                </p>
             </div>
         </div>
     );
